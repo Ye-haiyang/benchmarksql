@@ -737,12 +737,12 @@ public class jTPCC implements jTPCCConfig
 	{
 	    StringBuilder informativeText = new StringBuilder("");
 	    Formatter fmt = new Formatter(informativeText);
-	    double tpmC = (6000000*fastNewOrderCounter/(currTimeMillis - sessionStartTimestamp))/100.0;
-	    double tpmTotal = (6000000*transactionCount/(currTimeMillis - sessionStartTimestamp))/100.0;
+	    double tpmC = (6000000*fastNewOrderCounter/(currTimeMillis - sessionStartTimestamp))/100.0;		// 计算1min的tpmc
+	    double tpmTotal = (6000000*transactionCount/(currTimeMillis - sessionStartTimestamp))/100.0;	// 计算1min的tmptotal
+ 
+	    sessionNextTimestamp += 1000;  /* update this every seconds */					// 设置 更新 周期：现1s
 
-	    sessionNextTimestamp += 1000;  /* update this every seconds */
-
-	    fmt.format("Term-00, Running Average tpmTOTAL: %.2f", tpmTotal);
+	    fmt.format("Term-00, Running Average tpmTOTAL: %.2f", tpmTotal);					// 格式话输出，类似printf
 
 	    /* XXX What is the meaning of these numbers? */
 	    recentTpmC = (fastNewOrderCounter - sessionNextKounter) * 12;
